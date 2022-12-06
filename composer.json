@@ -1,0 +1,20 @@
+{
+  "name": "biaodianyun/sdk",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "JerryTZF",
+      "email": "tzfforyou@163.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Biaodianyun\\sdk\\": "src/"
+    }
+  }
+}
