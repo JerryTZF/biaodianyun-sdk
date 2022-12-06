@@ -14,7 +14,17 @@
   },
   "autoload": {
     "psr-4": {
-      "Biaodianyun\\sdk\\": "src/"
+      "Biaodianyun\\Sdk\\": "src/"
     }
-  }
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/JerryTZF/biaodianyun-sdk"
+    },
+    {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
+    }
+  ]
 }
