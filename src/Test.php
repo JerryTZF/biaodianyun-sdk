@@ -10,7 +10,7 @@ declare(strict_types=1);
  * Desc:
  */
 
-namespace Biaodianyun\sdk;
+namespace Biaodianyun\Sdk;
 
 class Test
 {

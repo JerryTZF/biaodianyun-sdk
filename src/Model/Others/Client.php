@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Created by PhpStorm
  * Time: 2022/12/7 11:14
  * Author: JerryTian<tzfforyou@163.com>
- * File: Client.php
+ * File: FlowersClient.php
  * Desc:
  */
 namespace Biaodianyun\sdk\model\others;

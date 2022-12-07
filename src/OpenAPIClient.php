@@ -33,11 +33,11 @@ abstract class OpenAPIClient
     }
 
     // 显式声明网关(可以动态变更网关)
-//    public function setGateway(string $gateway = ''): static
-//    {
-//        $this->gateway = $gateway;
-//        return $this;
-//    }
+    public function setGateway(string $gateway = ''): OpenAPIClient
+    {
+        $this->gateway = $gateway;
+        return $this;
+    }
 
     public function handle(){}
 }

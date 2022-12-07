@@ -10,7 +10,7 @@ declare(strict_types=1);
  * Desc:
  */
 
-namespace Biaodianyun\sdk;
+namespace Biaodianyun\Sdk;
 
 // 后续可扩展该类, 丰富对应的配置项
 class Config

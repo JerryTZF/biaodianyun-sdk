@@ -9,6 +9,7 @@
     }
   ],
   "require": {
+    "php": ">=7.4",
     "guzzlehttp/guzzle": "*",
     "ext-json": "*"
   },

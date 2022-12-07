@@ -10,10 +10,9 @@ declare(strict_types=1);
  * Desc:
  */
 
+namespace Biaodianyun\Sdk\Model\Flowers;
 
-namespace Biaodianyun\sdk\model\flowers;
-
-class GetMediaInfoRequest
+class GetMediaInfoRequest extends Request
 {
-
+    public string $media;
 }
