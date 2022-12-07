@@ -14,5 +14,12 @@ namespace Biaodianyun\Sdk\Model\Flowers;
 
 class GetMediaInfoRequest extends Request
 {
-    public string $media;
+    // body类型
+    public string $bodyType = 'json';
+
+    // 域名(当走网关时, 域名为网关)
+    public string $domain = 'https://sc-videos.sc.k8s.biaodianyun.com';
+
+    // 路径
+    public string $path = '';
 }

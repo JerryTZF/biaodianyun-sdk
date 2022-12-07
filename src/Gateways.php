@@ -31,4 +31,13 @@ class Gateways
 
     // 自研网关 测试地址
     public const BDY_DEV = 'https://gw-develop.dev.sc.k8s.biaodianyun.com';
+
+    public const MAP = [
+        'https://gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
+        'https://dev.gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
+        'https://gateway.biaodianyun.com/gateway.do' => 'APISIX',
+        'https://gw-production.sc.k8s.biaodianyun.com' => 'BDY',
+        'https://gw-production-bdy.sc.k8s.biaodianyun.com' => 'BDY',
+        'https://gw-develop.dev.sc.k8s.biaodianyun.com' => 'BDY',
+    ];
 }

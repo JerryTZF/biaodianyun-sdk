@@ -13,7 +13,8 @@ declare(strict_types=1);
 namespace Biaodianyun\Sdk\Model\Flowers;
 
 use Biaodianyun\Sdk\Config;
-use Biaodianyun\Sdk\Middleware\ApisixMiddleware;
+use Biaodianyun\Sdk\Gateways;
+use Biaodianyun\Sdk\Middleware\GatewayMiddleware;
 use Biaodianyun\Sdk\OpenAPIClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -24,20 +25,31 @@ class FlowersClient extends OpenAPIClient
 {
     protected Client $client;
 
+    protected string $gatewayType;
+
+    protected HandlerStack $stack;
+
     public function __construct(Config $config)
     {
         parent::__construct($config);
         $this->client = new Client();
+
+        // 根据 `gateway` 判断使用何种中间件
+        $this->gatewayType = $this->gateway === '' ? '' : Gateways::MAP[$this->gateway];
+
+        $stack = new HandlerStack();
+        $stack->setHandler(new CurlHandler());
+        if ($this->gatewayType !== '') {
+            $func = $this->gatewayType === 'APISIX' ? 'apisixSign' : 'bdySign';
+            $stack->push(GatewayMiddleware::$func());
+        }
+        $this->stack = $stack;
     }
 
     // 列举你的服务中都有哪些API
-
     public function getMediaInfo(Request $request): array
     {
-        $stack = new HandlerStack();
-        $stack->setHandler(new CurlHandler());
-        $stack->push(ApisixMiddleware::sign());
-        $url = $this->gateway;
+        $path = $request;
         $u = 'http://sc-videos.sc.k8s.biaodianyun.com/ims/get_media_info';
         try {
             $response = $this->client->post($u, [

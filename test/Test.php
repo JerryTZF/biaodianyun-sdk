@@ -11,6 +11,7 @@ $config = new Config();
 $config->setGateway(Gateways::BDY_MASTER_PUBLIC);
 $config->setAccessKey('xxx');
 $config->setSecret('xxx');
+
 $client = new FlowersClient($config);
 
 $request = new GetMediaInfoRequest();
