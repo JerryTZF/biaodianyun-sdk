@@ -25,8 +25,6 @@ class FlowersClient extends OpenAPIClient
 {
     protected Client $client;
 
-    protected string $gatewayType;
-
     protected HandlerStack $stack;
 
     public function __construct(Config $config)
@@ -35,12 +33,12 @@ class FlowersClient extends OpenAPIClient
         $this->client = new Client();
 
         // 根据 `gateway` 判断使用何种中间件
-        $this->gatewayType = $this->gateway === '' ? '' : Gateways::MAP[$this->gateway];
+        $gatewayType = $this->gateway === '' ? '' : Gateways::MAP[$this->gateway];
 
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
-        if ($this->gatewayType !== '') {
-            $func = $this->gatewayType === 'APISIX' ? 'apisixSign' : 'bdySign';
+        if ($gatewayType !== '') {
+            $func = $gatewayType === 'APISIX' ? 'apisixSign' : 'bdySign';
             $stack->push(GatewayMiddleware::$func());
         }
         $this->stack = $stack;
@@ -50,10 +48,10 @@ class FlowersClient extends OpenAPIClient
     public function getMediaInfo(Request $request): array
     {
         $path = $request;
-        $u = 'http://sc-videos.sc.k8s.biaodianyun.com/ims/get_media_info';
+        $u = 'https://sc-videos.sc.k8s.biaodianyun.com/ims/get_media_info';
         try {
             $response = $this->client->post($u, [
-                'handler' => $stack,
+                'handler' => $this->stack,
                 'json' => ['media' => 'https://jerry-markdown.oss-cn-shenzhen.aliyuncs.com/music/mzcl_.wav'],
                 'debug' => true,
             ])->getBody()->getContents();

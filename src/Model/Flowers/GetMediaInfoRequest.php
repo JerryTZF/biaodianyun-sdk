@@ -21,5 +21,5 @@ class GetMediaInfoRequest extends Request
     public string $domain = 'https://sc-videos.sc.k8s.biaodianyun.com';
 
     // 路径
-    public string $path = '';
+    public string $path = 'ims/get_media_info';
 }
