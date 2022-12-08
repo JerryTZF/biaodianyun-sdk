@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Biaodianyun\Sdk\Middleware;
 
+use Biaodianyun\Sdk\Util;
 use Psr\Http\Message\RequestInterface;
 
 class GatewayMiddleware
@@ -21,6 +22,13 @@ class GatewayMiddleware
         return function (callable $handler) {
             return function (RequestInterface $request, array $options) use ($handler) {
                 // TODO 你的中间件逻辑
+                $date = Util::utcDateTime();
+                // 添加 Date 头
+                $request->withHeader('Date', $date);
+                $timestamp = time();
+                $query = $request->getUri()->getQuery();
+
+
                 $request = $request->withHeader('xxx', 'xxx');
                 return $handler($request, $options);
             };

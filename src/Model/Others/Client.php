@@ -9,7 +9,7 @@ declare(strict_types=1);
  * File: FlowersClient.php
  * Desc:
  */
-namespace Biaodianyun\sdk\model\others;
+namespace Biaodianyun\Sdk\Model\Others;
 
 use Biaodianyun\Sdk\OpenAPIClient;
 

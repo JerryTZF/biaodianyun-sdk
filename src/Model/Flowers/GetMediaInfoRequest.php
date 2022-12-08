@@ -22,4 +22,7 @@ class GetMediaInfoRequest extends Request
 
     // 路径
     public string $path = 'ims/get_media_info';
+
+    // 请求方法
+    public string $httpMethod = 'POST';
 }

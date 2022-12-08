@@ -44,6 +44,20 @@ class FlowersClient extends OpenAPIClient
         $this->stack = $stack;
     }
 
+    public function execute(Request $request)
+    {
+        // 获取路由 domain(gateway) + path
+        if ($this->gateway) {
+            $url = $this->gateway . DIRECTORY_SEPARATOR . $request->path;
+        }
+        // stack
+
+        // options
+
+        // response adapter
+
+    }
+
     // 列举你的服务中都有哪些API
     public function getMediaInfo(Request $request): array
     {
