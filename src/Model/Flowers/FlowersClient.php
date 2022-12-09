@@ -39,7 +39,7 @@ class FlowersClient extends OpenAPIClient
         $stack->setHandler(new CurlHandler());
         if ($gatewayType !== '') {
             $func = $gatewayType === 'APISIX' ? 'apisixSign' : 'bdySign';
-            $stack->push(GatewayMiddleware::$func());
+            $stack->push(GatewayMiddleware::$func($this->accessKey, $this->secret));
         }
         $this->stack = $stack;
     }
@@ -62,11 +62,12 @@ class FlowersClient extends OpenAPIClient
     public function getMediaInfo(Request $request): array
     {
         $path = $request;
-        $u = 'https://sc-videos.sc.k8s.biaodianyun.com/ims/get_media_info';
+        $u = 'https://sc-videos.sc.k8s.biaodianyun.com/ims/get_media_info?a=b';
         try {
             $response = $this->client->post($u, [
                 'handler' => $this->stack,
                 'json' => ['media' => 'https://jerry-markdown.oss-cn-shenzhen.aliyuncs.com/music/mzcl_.wav'],
+                'verify' => false,
                 'debug' => true,
             ])->getBody()->getContents();
             var_dump($response);
