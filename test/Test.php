@@ -4,22 +4,25 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Biaodianyun\Sdk\Config;
 use Biaodianyun\Sdk\Gateways;
-use Biaodianyun\Sdk\Model\Flowers\FlowersClient;
 use Biaodianyun\Sdk\Model\Flowers\GetMediaInfoRequest;
+use Biaodianyun\Sdk\OpenAPIClient;
 
 $config = new Config();
-$config->setGateway(Gateways::APISIX_MASTER_PUBLIC);
+$config->setGateway(Gateways::APISIX_DEV);
 $config->setAccessKey('xxx');
 $config->setSecret('xxx');
 
-$client = new FlowersClient($config);
+$client = new OpenAPIClient($config);
 
 $request = new GetMediaInfoRequest();
-$request->media = 'https://jerry-markdown.oss-cn-shenzhen.aliyuncs.com/music/mzcl_.wav';
+$request->gatewayPath = '';
+$request->setMedia('51c825b079bb71ed993a909488556302');
+$request->isSSL = false;
+$request->isDebug = true;
 
-$client->getMediaInfo($request);
+$client->send($request);
 
 function main()
 {
-    $request = new \http\Client\Request('GET','',[],'');
+    $request = new \http\Client\Request('GET', '', [], '');
 }

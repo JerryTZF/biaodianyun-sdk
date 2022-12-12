@@ -15,29 +15,29 @@ namespace Biaodianyun\Sdk;
 class Gateways
 {
     // APISIX 正式地址
-    public const APISIX_MASTER = 'https://gateway.tools.biaodianyun.com/gateway.do';
+    public const APISIX_MASTER = 'http//gateway.tools.biaodianyun.com/gateway.do';
 
     // APISIX 测试地址
-    public const APISIX_DEV = 'https://dev.gateway.tools.biaodianyun.com/gateway.do';
+    public const APISIX_DEV = 'http://dev.gateway.tools.biaodianyun.com/gateway.do';
 
     // APISIX 正式地址(公网测试)
-    public const APISIX_MASTER_PUBLIC = 'https://gateway.biaodianyun.com/gateway.do';
+    public const APISIX_MASTER_PUBLIC = 'http://gateway.biaodianyun.com/gateway.do';
 
     // 自研网关 正式地址
-    public const BDY_MASTER = 'https://gw-production.sc.k8s.biaodianyun.com';
+    public const BDY_MASTER = 'http://gw-production.sc.k8s.biaodianyun.com';
 
     // 自研网关 正式地址(公网测试)
-    public const BDY_MASTER_PUBLIC = 'https://gw-production-bdy.sc.k8s.biaodianyun.com';
+    public const BDY_MASTER_PUBLIC = 'http://gw-production-bdy.sc.k8s.biaodianyun.com';
 
     // 自研网关 测试地址
-    public const BDY_DEV = 'https://gw-develop.dev.sc.k8s.biaodianyun.com';
+    public const BDY_DEV = 'http://gw-develop.dev.sc.k8s.biaodianyun.com';
 
     public const MAP = [
-        'https://gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
-        'https://dev.gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
-        'https://gateway.biaodianyun.com/gateway.do' => 'APISIX',
-        'https://gw-production.sc.k8s.biaodianyun.com' => 'BDY',
-        'https://gw-production-bdy.sc.k8s.biaodianyun.com' => 'BDY',
-        'https://gw-develop.dev.sc.k8s.biaodianyun.com' => 'BDY',
+        'http://gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
+        'http://dev.gateway.tools.biaodianyun.com/gateway.do' => 'APISIX',
+        'http://gateway.biaodianyun.com/gateway.do' => 'APISIX',
+        'http://gw-production.sc.k8s.biaodianyun.com' => 'BDY',
+        'http://gw-production-bdy.sc.k8s.biaodianyun.com' => 'BDY',
+        'http://gw-develop.dev.sc.k8s.biaodianyun.com' => 'BDY',
     ];
 }

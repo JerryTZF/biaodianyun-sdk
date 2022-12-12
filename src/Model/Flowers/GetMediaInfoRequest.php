@@ -12,17 +12,26 @@ declare(strict_types=1);
 
 namespace Biaodianyun\Sdk\Model\Flowers;
 
-class GetMediaInfoRequest extends Request
+use Biaodianyun\Sdk\BdyRequest;
+
+class GetMediaInfoRequest extends BdyRequest
 {
-    // body类型
     public string $bodyType = 'json';
 
-    // 域名(当走网关时, 域名为网关)
+    public string $contentType = 'application/json';
+
     public string $domain = 'https://sc-videos.sc.k8s.biaodianyun.com';
 
-    // 路径
-    public string $path = 'ims/get_media_info';
+    public string $path = '/ims/get_media_info';
 
-    // 请求方法
     public string $httpMethod = 'POST';
+
+    public bool $isDebug = true;
+
+    public string $gatewayPath = 'xx.xx.xx';
+
+    public function setMedia(string $media): void
+    {
+        $this->params['media'] = $media;
+    }
 }

@@ -15,11 +15,11 @@ namespace Biaodianyun\Sdk;
 // 后续可扩展该类, 丰富对应的配置项
 class Config
 {
-    protected string $accessKey;
+    protected string $accessKey = '';
 
-    protected string $secret;
+    protected string $secret = '';
 
-    protected string $gateway;
+    protected string $gateway = '';
 
     public function setAccessKey(string $accessKey): void
     {

@@ -24,7 +24,7 @@ class GatewayMiddleware
                 [$date, $timestamp] = [Util::utcDateTime(), time()];
 
                 // 添加 Date 头
-//                $request->withHeader('Date', $date);
+                $request->withHeader('Date', $date);
 
                 // 待签名头
                 $needSignHeaders = [
@@ -77,9 +77,33 @@ class GatewayMiddleware
                 $bodyDigest = base64_encode(hash_hmac('sha256', $bodyString, $key, true));
 
 
-                var_dump($bodyString);
-                var_dump($request->getUri()->getPath());
-                $request = $request->withHeader('xxx', 'xxx');
+//                var_dump($bodyString);
+//                var_dump($request->getUri()->getPath());
+
+                $needWithHeaders = [
+                    Util::HEADER_X_APPKEY => $key,
+                    Util::HEADER_X_METHOD => $request->getMethod(),
+                    Util::HEADER_X_TIMESTAMP => $timestamp,
+                    Util::HEADER_X_VERSION => '1.0',
+                    Util::HEADER_X_SIGN_TYPE => 'hmac-sha256',
+                    Util::HEADER_X_HMAC_DIGEST => $bodyDigest,
+                    Util::HEADER_X_SIGN => $sign,
+
+                    Util::HEADER_X_HMAC_ALGORITHM => 'hmac-sha256',
+                    Util::HEADER_X_HMAC_ACCESS_KEY => $key,
+                    Util::HEADER_X_HMAC_SIGNATURE => $sign,
+                    Util::HEADER_DATE => $date,
+                    Util::HEADER_X_HMAC_SIGNED_HEADERS => $signedHeaderString,
+                ];
+
+                // 添加头
+                foreach ($needWithHeaders as $key => $value) {
+                    $request = $request->withHeader(strtoupper($key), $value);
+                }
+                // 替换 QUERY
+                $request = $request->withUri($request->getUri()->withQuery($sortedQueryString));
+                // 开启 SSL 验证
+                $options['verify'] = true;
                 return $handler($request, $options);
             };
         };
