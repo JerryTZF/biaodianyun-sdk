@@ -8,7 +8,7 @@ use Biaodianyun\Sdk\Model\Flowers\GetMediaInfoRequest;
 use Biaodianyun\Sdk\OpenAPIClient;
 
 $config = new Config();
-$config->setGateway(Gateways::APISIX_DEV);
+$config->setGateway(Gateways::BDY_DEV);
 $config->setAccessKey('xxx');
 $config->setSecret('xxx');
 
@@ -21,8 +21,3 @@ $request->isSSL = false;
 $request->isDebug = true;
 
 $client->send($request);
-
-function main()
-{
-    $request = new \http\Client\Request('GET', '', [], '');
-}

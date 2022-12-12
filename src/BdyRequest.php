@@ -15,38 +15,38 @@ namespace Biaodianyun\Sdk;
 abstract class BdyRequest
 {
     // 请求类型
-    public string $contentType = 'application/json';
+    public $contentType = 'application/json';
 
     // 请求体类型
-    public string $bodyType = 'json';
+    public $bodyType = 'json';
 
     // 是否客气 DEBUG 模式
-    public bool $isDebug = false;
+    public $isDebug = false;
 
     // SSL 验证
-    public bool $isSSL = false;
+    public $isSSL = false;
 
     // 超时时间
-    public float $timeout = 5.0;
+    public $timeout = 5.0;
 
     // 请求方法
-    public string $httpMethod = 'GET';
+    public $httpMethod = 'GET';
 
     // 域名(无网关时使用)
-    public string $domain;
+    public $domain;
 
     // 无网关路径(无网关时路径)
-    public string $path;
+    public $path;
 
     // 网关自定义的path
-    public string $gatewayPath;
+    public $gatewayPath;
 
     // QUERY 键值对
-    public array $querys = [];
+    public $querys = [];
 
     // HEADERS 键值对
-    public array $headers = [];
+    public $headers = [];
 
     // PARAMS 键值对
-    public array $params = [];
+    public $params = [];
 }

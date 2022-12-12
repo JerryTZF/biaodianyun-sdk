@@ -22,13 +22,13 @@ use GuzzleHttp\HandlerStack;
 class OpenAPIClient
 {
     // 业务秘钥KEY
-    protected string $accessKey;
+    protected $accessKey;
 
     // 业务秘钥
-    protected string $secret;
+    protected $secret;
 
     // 网关
-    protected string $gateway;
+    protected $gateway;
 
     public function __construct(Config $config)
     {

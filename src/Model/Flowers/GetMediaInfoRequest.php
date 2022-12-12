@@ -16,19 +16,19 @@ use Biaodianyun\Sdk\BdyRequest;
 
 class GetMediaInfoRequest extends BdyRequest
 {
-    public string $bodyType = 'json';
+    public $bodyType = 'json';
 
-    public string $contentType = 'application/json';
+    public $contentType = 'application/json';
 
-    public string $domain = 'https://sc-videos.sc.k8s.biaodianyun.com';
+    public $domain = 'https://sc-videos.sc.k8s.biaodianyun.com';
 
-    public string $path = '/ims/get_media_info';
+    public $path = '/ims/get_media_info';
 
-    public string $httpMethod = 'POST';
+    public $httpMethod = 'POST';
 
-    public bool $isDebug = true;
+    public $isDebug = true;
 
-    public string $gatewayPath = 'xx.xx.xx';
+    public $gatewayPath = 'xx.xx.xx';
 
     public function setMedia(string $media): void
     {
