@@ -9,24 +9,13 @@
     }
   ],
   "require": {
-    "php": ">=7.4",
+    "php": ">=7.2",
     "guzzlehttp/guzzle": "*",
-    "ext-json": "*",
-    "ext-http": "*"
+    "ext-json": "*"
   },
   "autoload": {
     "psr-4": {
       "Biaodianyun\\Sdk\\": "src/"
     }
-  },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/JerryTZF/biaodianyun-sdk"
-    },
-    {
-      "type": "composer",
-      "url": "https://mirrors.aliyun.com/composer/"
-    }
-  ]
+  }
 }

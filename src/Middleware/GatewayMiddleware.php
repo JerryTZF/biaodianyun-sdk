@@ -76,10 +76,6 @@ class GatewayMiddleware
                 // body 摘要
                 $bodyDigest = base64_encode(hash_hmac('sha256', $bodyString, $key, true));
 
-
-//                var_dump($bodyString);
-//                var_dump($request->getUri()->getPath());
-
                 $needWithHeaders = [
                     Util::HEADER_X_APPKEY => $key,
                     Util::HEADER_X_METHOD => $request->getMethod(),
@@ -109,11 +105,63 @@ class GatewayMiddleware
         };
     }
 
-    public static function bdySign(): \Closure
+    public static function bdySign(string $key, string $secret): \Closure
     {
-        return function (callable $handler) {
-            return function (RequestInterface $request, array $options) use ($handler) {
-                // TODO 你的中间件逻辑
+        return function (callable $handler) use ($key, $secret) {
+            return function (RequestInterface $request, array $options) use ($handler, $key, $secret) {
+                $timestamp = time();
+                // 获取排序后的 query
+                $sortedQueryString = (function () use ($request) {
+                    // 解析query
+                    parse_str($request->getUri()->getQuery(), $queryArray);
+                    // 正序query
+                    ksort($queryArray);
+                    return http_build_query($queryArray);
+                })();
+
+                // 待签名头
+                $needSignHeaders = [
+                    strtoupper(Util::HEADER_X_APPKEY) => $key,
+                    strtoupper(Util::HEADER_X_SIGN_TYPE) => 'hmac-sha256',
+                    strtoupper(Util::HEADER_X_TIMESTAMP) => $timestamp,
+                    strtoupper(Util::HEADER_X_VERSION) => '1.0',
+                ];
+
+                $signHeaderString = (function () use ($request, $timestamp, $needSignHeaders) {
+                    ksort($needSignHeaders);
+                    $r = [];
+                    foreach ($needSignHeaders as $header => $value) {
+                        $r[] = sprintf('%s:%s', $header, $value);
+                    }
+
+                    return implode("\n", $r);
+                })();
+
+                $bodyString = $request->getBody()->getContents();
+
+                $signedString = implode("\n", [
+                    $request->getMethod(),
+                    $request->getUri()->getPath() . $request->getUri()->getQuery(),
+                    $signHeaderString,
+                    $bodyString
+                ]);
+
+                $sign = hash_hmac('sha256', $signedString, $key);
+
+                $needWithHeaders = [
+                    Util::HEADER_X_SIGN_TYPE => 'hmac-sha256',
+                    Util::HEADER_X_APPKEY => $key,
+                    Util::HEADER_X_SIGN => $sign,
+                    Util::HEADER_X_METHOD => $request->getMethod(),
+                    Util::HEADER_X_VERSION => '1.0',
+                    Util::HEADER_X_TIMESTAMP => $timestamp,
+                ];
+
+                foreach ($needWithHeaders as $key => $value) {
+                    $request = $request->withHeader(strtoupper($key), $value);
+                }
+                $request = $request->withUri($request->getUri()->withQuery($sortedQueryString));
+                $options['verify'] = true;
 
                 return $handler($request, $options);
             };
