@@ -15,7 +15,7 @@ namespace Biaodianyun\Sdk;
 class Gateways
 {
     // APISIX 正式地址
-    public const APISIX_MASTER = 'http//gateway.tools.biaodianyun.com/gateway.do';
+    public const APISIX_MASTER = 'http://gateway.tools.biaodianyun.com/gateway.do';
 
     // APISIX 测试地址
     public const APISIX_DEV = 'http://dev.gateway.tools.biaodianyun.com/gateway.do';

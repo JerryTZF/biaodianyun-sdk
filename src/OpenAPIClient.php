@@ -53,7 +53,6 @@ class OpenAPIClient
             $func = ($gatewayType === 'APISIX') ? 'apisixSign' : 'bdySign';
             $stack->push(GatewayMiddleware::$func($this->accessKey, $this->secret));
         }
-
         // gateway 和 domain 至少填写一个
         if ($this->gateway === '' && $request->domain === '') {
             throw new Exception('gateway or domain is required :(');
@@ -69,7 +68,6 @@ class OpenAPIClient
 
         // 构建 OPTIONS
         $options = [
-            'handler' => $stack,
             'query' => $request->querys,
             'headers' => $request->headers,
             'timeout' => $request->timeout,

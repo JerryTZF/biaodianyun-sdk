@@ -22,10 +22,8 @@ class GatewayMiddleware
         return function (callable $handler) use ($key, $secret) {
             return function (RequestInterface $request, array $options) use ($handler, $key, $secret) {
                 [$date, $timestamp] = [Util::utcDateTime(), time()];
-
                 // 添加 Date 头
                 $request->withHeader('Date', $date);
-
                 // 待签名头
                 $needSignHeaders = [
                     strtoupper(Util::HEADER_X_APPKEY) => $key,
@@ -44,13 +42,10 @@ class GatewayMiddleware
 
                     return implode("\n", $r);
                 })();
-
                 // 已签名的头信息
                 $signedHeaderString = implode(';', array_keys($needSignHeaders));
-
                 // body
                 $bodyString = $request->getBody()->getContents();
-
                 // 获取排序后的 query
                 $sortedQueryString = (function () use ($request) {
                     // 解析query
@@ -59,7 +54,6 @@ class GatewayMiddleware
                     ksort($queryArray);
                     return http_build_query($queryArray);
                 })();
-
                 // 待签名 字符串
                 $signedString = implode("\n", [
                     $request->getMethod(),
@@ -70,7 +64,6 @@ class GatewayMiddleware
                     $signHeaderString,
                     null,
                 ]);
-
                 // 计算签名
                 $sign = base64_encode(hash_hmac('sha256', $signedString, $key, true));
                 // body 摘要
@@ -91,7 +84,6 @@ class GatewayMiddleware
                     Util::HEADER_DATE => $date,
                     Util::HEADER_X_HMAC_SIGNED_HEADERS => $signedHeaderString,
                 ];
-
                 // 添加头
                 foreach ($needWithHeaders as $key => $value) {
                     $request = $request->withHeader(strtoupper($key), $value);
