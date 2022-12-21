@@ -20,7 +20,7 @@ abstract class BdyRequest
     // 请求体类型
     public $bodyType = 'json';
 
-    // 是否客气 DEBUG 模式
+    // 是否 DEBUG 模式
     public $isDebug = false;
 
     // SSL 验证
