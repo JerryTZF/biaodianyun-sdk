@@ -79,9 +79,11 @@ class OpenAPIClient
         try {
             $client = new Client(['handler' => $stack]);
             $response = $client->request($request->httpMethod, $uri, $options)->getBody()->getContents();
-            var_dump($response);
+            return json_decode($response, true) ?? [];
         } catch (GuzzleException $e) {
             var_dump($e->getMessage());
         }
+
+        return [];
     }
 }

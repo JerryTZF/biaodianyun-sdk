@@ -28,7 +28,7 @@ class GetMediaInfoRequest extends BdyRequest
 
     public $isDebug = true;
 
-    public $gatewayPath = 'xx.xx.xx';
+    public $gatewayPath = '';
 
     public function setMedia(string $media): void
     {

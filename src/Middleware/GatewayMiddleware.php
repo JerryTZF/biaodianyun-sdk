@@ -52,6 +52,7 @@ class GatewayMiddleware
                     parse_str($request->getUri()->getQuery(), $queryArray);
                     // 正序query
                     ksort($queryArray);
+
                     return http_build_query($queryArray);
                 })();
                 // 待签名 字符串
@@ -108,6 +109,7 @@ class GatewayMiddleware
                     parse_str($request->getUri()->getQuery(), $queryArray);
                     // 正序query
                     ksort($queryArray);
+
                     return http_build_query($queryArray);
                 })();
 
@@ -129,7 +131,9 @@ class GatewayMiddleware
                     return implode("\n", $r);
                 })();
 
-                $bodyString = $request->getBody()->getContents();
+                // 注意: 当中间件中获取过body, 后续再次获取无法获取到, 除非重置游标, 例如:
+                // $request->getBody()->rewind();
+                $bodyString = $request->getBody()->getContents() ?: json_encode([]);
 
                 $signedString = implode("\n", [
                     $request->getMethod(),
@@ -138,13 +142,12 @@ class GatewayMiddleware
                     $bodyString
                 ]);
 
-                $sign = hash_hmac('sha256', $signedString, $key);
+                $sign = hash_hmac('sha256', $signedString, $secret);
 
                 $needWithHeaders = [
                     Util::HEADER_X_SIGN_TYPE => 'hmac-sha256',
                     Util::HEADER_X_APPKEY => $key,
                     Util::HEADER_X_SIGN => $sign,
-                    Util::HEADER_X_METHOD => $request->getMethod(),
                     Util::HEADER_X_VERSION => '1.0',
                     Util::HEADER_X_TIMESTAMP => $timestamp,
                 ];
