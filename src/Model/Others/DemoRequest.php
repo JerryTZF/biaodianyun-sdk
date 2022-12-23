@@ -10,7 +10,6 @@ declare(strict_types=1);
  * Desc:
  */
 
-
 namespace Biaodianyun\Sdk\Model\Others;
 
 use Biaodianyun\Sdk\BdyRequest;

@@ -15,8 +15,8 @@ $config->setSecret('a8451b2c15c3a46ce1f17eda1d359bc57fcfa326');
 $client = new OpenAPIClient($config);
 
 $request = new DemoRequest();
-$request->isSSL = false;
-$request->isDebug = true;
+$request->isSSL = true;
+$request->isDebug = false;
 
 try {
     $response = $client->send($request);

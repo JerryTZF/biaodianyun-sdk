@@ -45,7 +45,7 @@ class OpenAPIClient
     public function send(BdyRequest $request)
     {
         // 中间件
-        $gatewayType = $this->gateway === '' ? '' : Gateways::MAP[$this->gateway];
+        $gatewayType = $this->gateway ?: Gateways::MAP[$this->gateway];
 
         $stack = new HandlerStack();
         $stack->setHandler(new CurlHandler());
