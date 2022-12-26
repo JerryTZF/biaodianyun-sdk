@@ -49,4 +49,10 @@ abstract class BdyRequest
 
     // PARAMS 键值对
     public $params = [];
+
+    // 通用设置参数
+    public function setParams(array $params): void
+    {
+        $this->params = $params;
+    }
 }

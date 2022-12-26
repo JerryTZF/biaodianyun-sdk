@@ -30,6 +30,25 @@ class OpenAPIClient
     // 网关
     protected $gateway;
 
+    // 网关错误码定义
+    protected const GATEWAY_ERROR_CODES = [
+        '20000' => '服务不可用',
+        '20001' => '网关不可用',
+        '20002' => '授权权限不足',
+        '20003' => '签名错误',
+        '40001' => '缺少必要参数',
+        '40002' => '非法的参数',
+        '40004' => '业务处理失败',
+        '40005' => '调用频率过高',
+        '50001' => 'POI 中台内部错误',
+        '50002' => 'POI 中台系统繁忙',
+        '50003' => 'POI 中台请求参数错误',
+        '50004' => 'POI 中台锁获取失败',
+        '50101' => '已处于审核中的挂在信息',
+        '50201' => '挂载信息不存在',
+        '50202' => '当前状态不允许取消挂载'
+    ];
+
     public function __construct(Config $config)
     {
         [$this->accessKey, $this->secret, $this->gateway] = [
@@ -41,6 +60,7 @@ class OpenAPIClient
 
     /**
      * @throws Exception
+     * @throws GuzzleException
      */
     public function send(BdyRequest $request)
     {
@@ -64,7 +84,8 @@ class OpenAPIClient
 
 
         $domain = $this->gateway ?: $request->domain;
-        $uri = $gatewayType !== '' ? $domain . $request->gatewayPath : $domain . $request->path;
+        $uri = $gatewayType !== '' ? $domain . DIRECTORY_SEPARATOR . $request->gatewayPath :
+            $domain . DIRECTORY_SEPARATOR . $request->path;
 
         // 构建 OPTIONS
         $options = [
@@ -79,11 +100,15 @@ class OpenAPIClient
         try {
             $client = new Client(['handler' => $stack]);
             $response = $client->request($request->httpMethod, $uri, $options)->getBody()->getContents();
-            return json_decode($response, true) ?? [];
-        } catch (GuzzleException $e) {
-            var_dump($e->getMessage());
+            $response = json_decode($response, true) ?? [];
+            if (
+                isset($response['code']) &&
+                in_array($response['code'], array_keys(self::GATEWAY_ERROR_CODES))) {
+                $response['message'] ='网关错误, ' . self::GATEWAY_ERROR_CODES[$response['code']];
+            }
+            return $response;
+        } catch (GuzzleException|Exception $e) {
+            throw new $e();
         }
-
-        return [];
     }
 }

@@ -26,5 +26,36 @@ class DemoRequest extends BdyRequest
     public $httpMethod = 'POST';
 
     // 网关自定义的path
-    public $gatewayPath = '/index.index.wxshare';
+    public $gatewayPath = 'index.index.wxshare';
+
+    // 是否 DEBUG 模式
+    public $isDebug = false;
+
+    // SSL 验证
+    public $isSSL = false;
+
+    // 超时时间
+    public $timeout = 5.0;
+
+    // 域名(无网关时使用)
+    public $domain;
+
+    // 无网关路径(无网关时路径)
+    public $path;
+
+    // QUERY 键值对
+    public $querys = [];
+
+    // HEADERS 键值对
+    public $headers = [];
+
+    // PARAMS 键值对
+    public $params = [];
+
+    // 该请求是无参数的请求, 如果需要构建特殊参数, 可以自己封装
+    // 这里是一个例子
+    public function setId(int $id): void
+    {
+        $this->params['id'] = $id;
+    }
 }
